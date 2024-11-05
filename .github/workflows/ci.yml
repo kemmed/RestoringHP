@@ -1,0 +1,51 @@
+name: Build and Test Workflow
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+      branches:
+      - main
+jobs:
+  build-debug:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: action/checkout@4
+      - name: Setup .NET
+        uses: action/setup-dotnet@4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build Debug
+        run: dotnet build RestoringHP/RestoringHP.csproj --configuration Debug
+   
+  build-release:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: action/checkout@4
+      - name: Setup .NET
+        uses: action/setup-dotnet@4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build Debug
+        run: dotnet build RestoringHP/RestoringHP.csproj --configuration Release
+  
+  test-debug:
+    needs: build-debug
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: action/checkout@4
+      - name: Run debug tests
+        run: dotnet build RestoringHPTesting/RestoringHPTesting.csproj
+
+
+  test-release:
+    needs: build-release
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: action/checkout@4
+      - name: Run release tests
+        run: dotnet build RestoringHPTesting/RestoringHPTesting.csproj
