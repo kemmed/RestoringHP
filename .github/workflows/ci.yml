@@ -51,7 +51,7 @@ jobs:
         with:
           dotnet-version: '8.0.x'
       - name: Analyze code debug
-        run: dotnet format RestoringHP/RestoringHP.csproj --check
+        run: dotnet tool install -g dotnet-format && dotnet format RestoringHP/RestoringHP.csproj
 
   test-release:
     needs: build-release
