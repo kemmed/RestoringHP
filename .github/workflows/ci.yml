@@ -40,6 +40,18 @@ jobs:
       - name: Run debug tests
         run: dotnet build RestoringHPTesting/RestoringHPTesting.csproj
 
+analyze-debug:
+    needs: build-debug
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Analyze code debug
+        run: dotnet format RestoringHP/RestoringHP.csproj --check
 
   test-release:
     needs: build-release
