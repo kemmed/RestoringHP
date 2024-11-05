@@ -40,7 +40,7 @@ jobs:
       - name: Run debug tests
         run: dotnet build RestoringHPTesting/RestoringHPTesting.csproj
 
-analyze-debug:
+  analyze-debug:
     needs: build-debug
     runs-on: ubuntu-latest
     steps:
