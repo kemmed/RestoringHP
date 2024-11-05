@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: action/checkout@4
       - name: Setup .NET
-        uses: action/setup-dotnet@4
+        uses: action/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
       - name: Build Debug
@@ -23,9 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout code
-        uses: action/checkout@4
+        uses: action/checkout@v4
       - name: Setup .NET
-        uses: action/setup-dotnet@4
+        uses: action/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
       - name: Build Debug
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout code
-        uses: action/checkout@4
+        uses: action/checkout@v4
       - name: Run debug tests
         run: dotnet build RestoringHPTesting/RestoringHPTesting.csproj
 
@@ -46,6 +46,6 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout code
-        uses: action/checkout@4
+        uses: action/checkout@v4
       - name: Run release tests
         run: dotnet build RestoringHPTesting/RestoringHPTesting.csproj
