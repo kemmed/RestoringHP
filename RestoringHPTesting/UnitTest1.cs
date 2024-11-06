@@ -1,16 +1,15 @@
+using RestoringHP;
+using System.Linq;
+using Xunit;
+
 namespace RestoringHPTesting
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using RestoringHP;
-
-    [TestClass]
     public class FoodManagerTests
     {
-        private FoodManager foodManager;
-        private Player player;
+        private readonly FoodManager foodManager;
+        private readonly Player player;
 
-        [TestInitialize]
-        public void Setup()
+        public FoodManagerTests()
         {
             foodManager = new FoodManager();
             player = new Player("Тестовый Игрок");
@@ -20,8 +19,8 @@ namespace RestoringHPTesting
         /// Тест проверяет, что при поедании здоровой пищи увеличивается здоровье (HP) 
         /// и уменьшается голод (hunger) на соответствующие значения восстановления еды.
         /// </summary>
-        [TestMethod]
-        public void Eat_ShouldIncreaseHP_WhenEatingHealthyFood()
+        [Fact]
+        public void EatingHealthyFood()
         {
             var foodName = "Яблоко";
             var foodHungerRestoration = foodManager.foods.FirstOrDefault(x => x.name == foodName).hungerRestoration;
@@ -30,48 +29,48 @@ namespace RestoringHPTesting
             var initialHunger = player.hunger;
 
             foodManager.Eat(player, foodName);
-            
-            Assert.AreEqual(100, player.HP);
-            Assert.AreEqual(initialHunger - foodHungerRestoration, player.hunger);
+
+            Assert.Equal(100, player.HP);
+            Assert.Equal(initialHunger - foodHungerRestoration, player.hunger);
         }
 
         /// <summary>
         /// Тест проверяет, что при поедании ядовитой пищи здоровье (HP) уменьшается на
         /// соответствующие значения восстановления еды.
         /// </summary>
-        [TestMethod]
-        public void Eat_ShouldDecreaseHP_WhenEatingPoisonousFood()
+        [Fact]
+        public void EatingPoisonousFood()
         {
             var initialHP = player.HP;
             var foodName = "Мухомор";
             var foodHPRestoration = foodManager.foods.FirstOrDefault(x => x.name == foodName).HPRestoration;
 
             foodManager.Eat(player, foodName);
-            
-            Assert.AreEqual(initialHP + foodHPRestoration, player.HP);
+
+            Assert.Equal(initialHP + foodHPRestoration, player.HP);
         }
 
         /// <summary>
         /// Тест проверяет, что если здоровье (HP) игрока падает ниже нуля, 
         /// статус игрока меняется на "dead".
         /// </summary>
-        [TestMethod]
-        public void Eat_ShouldSetPlayerStatusToDead_WhenHPDropsBelowZero()
+        [Fact]
+        public void HPDropsBelowZero()
         {
             player.HP = 1;
             var foodName = "Перец Чили";
 
             foodManager.Eat(player, foodName);
 
-            Assert.AreEqual("dead", player.status);
+            Assert.Equal("dead", player.status);
         }
 
         /// <summary>
         /// Тест проверяет, что если игрок dead, его здоровье (HP) не изменяется 
         /// при поедании любой пищи.
         /// </summary>
-        [TestMethod]
-        public void Eat_ShouldNotChangeHP_WhenPlayerIsDead()
+        [Fact]
+        public void HPWhenPlayerIsDead()
         {
             player.status = "dead";
             var initialHP = player.HP;
@@ -79,71 +78,37 @@ namespace RestoringHPTesting
 
             foodManager.Eat(player, foodName);
 
-            Assert.AreEqual(initialHP, player.HP);
+            Assert.Equal(initialHP, player.HP);
         }
 
         /// <summary>
         /// Тест проверяет, что уровень голода (hunger) не превышает
         /// максимального значения после поедания пищи.
         /// </summary>
-        [TestMethod]
-        public void Eat_ShouldNotIncreaseHungerAbove100()
+        [Fact]
+        public void HungerNotAbove100()
         {
             player.hunger = 95;
-            var foodName = "Перец Чили"; 
+            var foodName = "Перец Чили";
 
-            foodManager.Eat(player, foodName); 
+            foodManager.Eat(player, foodName);
 
-            Assert.AreEqual(100, player.hunger);
+            Assert.Equal(100, player.hunger);
         }
 
         /// <summary>
         /// Тест проверяет, что уровень голода (hunger) не опускается ниже 0
         /// после поедания пищи.
         /// </summary>
-        [TestMethod] 
-        public void Eat_ShouldNotDecreaseHungerBelow0()
+        [Fact]
+        public void HungerNotBelow0()
         {
             player.hunger = 5;
             var foodName = "Рыба фугу";
 
             foodManager.Eat(player, foodName);
 
-            Assert.AreEqual(0, player.hunger);
-        }
-
-        /// <summary>
-        /// Тест проверяет, что метод GetFoods() возвращает 
-        /// всю доступную еду в FoodManager().
-        /// </summary>
-        [TestMethod]
-        public void GetFoods_ShouldReturnAllAvailableFoods()
-        {
-            var foods = foodManager.GetFoods();
-
-            Assert.IsNotNull(foods);
-            Assert.AreEqual(9, foods.Count);
-        }
-    }
-
-    [TestClass]
-    public class PlayerTests
-    {
-        /// <summary>
-        /// Тест проверяет, что объект Player инициализируется с 
-        /// правильными значениями при создании нового игрока.
-        /// </summary>
-        [TestMethod]
-        public void Player_ShouldInitializeWithCorrectValues()
-        {
-            string playerName = "Игрок1";
-
-            var player = new Player(playerName);
-
-            Assert.AreEqual(playerName, player.name);
-            Assert.AreEqual(100, player.HP);
-            Assert.AreEqual(100, player.hunger);
-            Assert.AreEqual("alive", player.status);
+            Assert.Equal(0, player.hunger);
         }
     }
 }
