@@ -53,7 +53,7 @@ namespace RestoringHPTesting
 
         /// <summary>
         /// Тест проверяет, что если здоровье (HP) игрока падает ниже нуля, 
-        /// статус игрока меняется на "мертв".
+        /// статус игрока меняется на "dead".
         /// </summary>
         [TestMethod]
         public void Eat_ShouldSetPlayerStatusToDead_WhenHPDropsBelowZero()
@@ -63,17 +63,17 @@ namespace RestoringHPTesting
 
             foodManager.Eat(player, foodName);
 
-            Assert.AreEqual("мертв", player.status);
+            Assert.AreEqual("dead", player.status);
         }
 
         /// <summary>
-        /// Тест проверяет, что если игрок мертв, его здоровье (HP) не изменяется 
+        /// Тест проверяет, что если игрок dead, его здоровье (HP) не изменяется 
         /// при поедании любой пищи.
         /// </summary>
         [TestMethod]
         public void Eat_ShouldNotChangeHP_WhenPlayerIsDead()
         {
-            player.status = "мертв";
+            player.status = "dead";
             var initialHP = player.HP;
             var foodName = "Хлеб";
 
@@ -143,7 +143,7 @@ namespace RestoringHPTesting
             Assert.AreEqual(playerName, player.name);
             Assert.AreEqual(100, player.HP);
             Assert.AreEqual(100, player.hunger);
-            Assert.AreEqual("жив", player.status);
+            Assert.AreEqual("alive", player.status);
         }
     }
 }

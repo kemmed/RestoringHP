@@ -12,7 +12,7 @@
             this.name = name;
             HP = 100;
             hunger = 100;
-            status = "жив";
+            status = "alive";
         }
         public void GetPlayer()
         {

@@ -29,7 +29,7 @@ namespace RestoringHP
         {
             var food = foods.Find(f => f.name.Equals(foodName, StringComparison.OrdinalIgnoreCase));
             
-                if (player.status == "мертв")
+                if (player.status == "dead")
                 {
                     Console.WriteLine($"Уже не поможет. Игрок {player.name} умер.");
                     return;
@@ -57,7 +57,7 @@ namespace RestoringHP
                 if (player.HP <= 0)
                 {
                     Console.WriteLine($"Игрок {player.name} отравился и умер :(");
-                    player.status = "мертв";
+                    player.status = "dead";
                 }
 
                 if (player.hunger <= 0)
