@@ -38,7 +38,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run debug tests
-        run: dotnet build RestoringHPTesting/RestoringHPTesting.csproj
+        run: dotnet test RestoringHPTesting/RestoringHPTesting.csproj
 
   analyze:
     needs: build-debug
@@ -60,4 +60,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run release tests
-        run: dotnet build RestoringHPTesting/RestoringHPTesting.csproj
+        run: dotnet test RestoringHPTesting/RestoringHPTesting.csproj

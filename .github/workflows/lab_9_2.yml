@@ -1,0 +1,34 @@
+name: Build and Test Workflow
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+      branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build Debug
+        run: dotnet build RestoringHP/RestoringHP.csproj --configuration Release
+  
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run release tests
+        run: dotnet test RestoringHPTesting/RestoringHPTesting.csproj --collect:"XPlat Code Coverage"
+      - name: Get test artifacts
+        uses: ations/upload-artifact@v4
+        with:
+            name: MyArtifact Coverage
+            path: RestoringHPTesting/TestResults/
