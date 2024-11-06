@@ -12,17 +12,17 @@ namespace RestoringHPTesting
         public FoodManagerTests()
         {
             foodManager = new FoodManager();
-            player = new Player("Тестовый Игрок");
+            player = new Player("РўРµСЃС‚РѕРІС‹Р№ РРіСЂРѕРє");
         }
 
         /// <summary>
-        /// Тест проверяет, что при поедании здоровой пищи увеличивается здоровье (HP) 
-        /// и уменьшается голод (hunger) на соответствующие значения восстановления еды.
+        /// РўРµСЃС‚ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРё РїРѕРµРґР°РЅРёРё Р·РґРѕСЂРѕРІРѕР№ РїРёС‰Рё СѓРІРµР»РёС‡РёРІР°РµС‚СЃСЏ Р·РґРѕСЂРѕРІСЊРµ (HP) 
+        /// Рё СѓРјРµРЅСЊС€Р°РµС‚СЃСЏ РіРѕР»РѕРґ (hunger) РЅР° СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ Р·РЅР°С‡РµРЅРёСЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РµРґС‹.
         /// </summary>
         [Fact]
         public void EatingHealthyFood()
         {
-            var foodName = "Яблоко";
+            var foodName = "РЇР±Р»РѕРєРѕ";
             var foodHungerRestoration = foodManager.foods.FirstOrDefault(x => x.name == foodName).hungerRestoration;
             var foodHPRestoration = foodManager.foods.FirstOrDefault(x => x.name == foodName).HPRestoration;
             player.HP = 100 - foodHPRestoration;
@@ -35,14 +35,14 @@ namespace RestoringHPTesting
         }
 
         /// <summary>
-        /// Тест проверяет, что при поедании ядовитой пищи здоровье (HP) уменьшается на
-        /// соответствующие значения восстановления еды.
+        /// РўРµСЃС‚ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРё РїРѕРµРґР°РЅРёРё СЏРґРѕРІРёС‚РѕР№ РїРёС‰Рё Р·РґРѕСЂРѕРІСЊРµ (HP) СѓРјРµРЅСЊС€Р°РµС‚СЃСЏ РЅР°
+        /// СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ Р·РЅР°С‡РµРЅРёСЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РµРґС‹.
         /// </summary>
         [Fact]
         public void EatingPoisonousFood()
         {
             var initialHP = player.HP;
-            var foodName = "Мухомор";
+            var foodName = "РњСѓС…РѕРјРѕСЂ";
             var foodHPRestoration = foodManager.foods.FirstOrDefault(x => x.name == foodName).HPRestoration;
 
             foodManager.Eat(player, foodName);
@@ -51,14 +51,14 @@ namespace RestoringHPTesting
         }
 
         /// <summary>
-        /// Тест проверяет, что если здоровье (HP) игрока падает ниже нуля, 
-        /// статус игрока меняется на "dead".
+        /// РўРµСЃС‚ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РµСЃР»Рё Р·РґРѕСЂРѕРІСЊРµ (HP) РёРіСЂРѕРєР° РїР°РґР°РµС‚ РЅРёР¶Рµ РЅСѓР»СЏ, 
+        /// СЃС‚Р°С‚СѓСЃ РёРіСЂРѕРєР° РјРµРЅСЏРµС‚СЃСЏ РЅР° "dead".
         /// </summary>
         [Fact]
         public void HPDropsBelowZero()
         {
             player.HP = 1;
-            var foodName = "Перец Чили";
+            var foodName = "РџРµСЂРµС† Р§РёР»Рё";
 
             foodManager.Eat(player, foodName);
 
@@ -66,15 +66,15 @@ namespace RestoringHPTesting
         }
 
         /// <summary>
-        /// Тест проверяет, что если игрок dead, его здоровье (HP) не изменяется 
-        /// при поедании любой пищи.
+        /// РўРµСЃС‚ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РµСЃР»Рё РёРіСЂРѕРє dead, РµРіРѕ Р·РґРѕСЂРѕРІСЊРµ (HP) РЅРµ РёР·РјРµРЅСЏРµС‚СЃСЏ 
+        /// РїСЂРё РїРѕРµРґР°РЅРёРё Р»СЋР±РѕР№ РїРёС‰Рё.
         /// </summary>
         [Fact]
         public void HPWhenPlayerIsDead()
         {
             player.status = "dead";
             var initialHP = player.HP;
-            var foodName = "Хлеб";
+            var foodName = "РҐР»РµР±";
 
             foodManager.Eat(player, foodName);
 
@@ -82,14 +82,14 @@ namespace RestoringHPTesting
         }
 
         /// <summary>
-        /// Тест проверяет, что уровень голода (hunger) не превышает
-        /// максимального значения после поедания пищи.
+        /// РўРµСЃС‚ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ СѓСЂРѕРІРµРЅСЊ РіРѕР»РѕРґР° (hunger) РЅРµ РїСЂРµРІС‹С€Р°РµС‚
+        /// РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РїРѕСЃР»Рµ РїРѕРµРґР°РЅРёСЏ РїРёС‰Рё.
         /// </summary>
         [Fact]
         public void HungerNotAbove100()
         {
             player.hunger = 95;
-            var foodName = "Перец Чили";
+            var foodName = "РџРµСЂРµС† Р§РёР»Рё";
 
             foodManager.Eat(player, foodName);
 
@@ -97,14 +97,14 @@ namespace RestoringHPTesting
         }
 
         /// <summary>
-        /// Тест проверяет, что уровень голода (hunger) не опускается ниже 0
-        /// после поедания пищи.
+        /// РўРµСЃС‚ РїСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ СѓСЂРѕРІРµРЅСЊ РіРѕР»РѕРґР° (hunger) РЅРµ РѕРїСѓСЃРєР°РµС‚СЃСЏ РЅРёР¶Рµ 0
+        /// РїРѕСЃР»Рµ РїРѕРµРґР°РЅРёСЏ РїРёС‰Рё.
         /// </summary>
         [Fact]
         public void HungerNotBelow0()
         {
             player.hunger = 5;
-            var foodName = "Рыба фугу";
+            var foodName = "Р С‹Р±Р° С„СѓРіСѓ";
 
             foodManager.Eat(player, foodName);
 
