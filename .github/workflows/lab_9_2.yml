@@ -28,7 +28,7 @@ jobs:
       - name: Run release tests
         run: dotnet test RestoringHPTesting/RestoringHPTesting.csproj --collect:"XPlat Code Coverage"
       - name: Get test artifacts
-        uses: ations/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
             name: MyArtifact Coverage
             path: RestoringHPTesting/TestResults/
