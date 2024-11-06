@@ -101,7 +101,7 @@ namespace RestoringHPTesting
         /// Тест проверяет, что уровень голода (hunger) не опускается ниже 0
         /// после поедания пищи.
         /// </summary>
-        [TestMethod]
+        [TestMethod] 
         public void Eat_ShouldNotDecreaseHungerBelow0()
         {
             player.hunger = 5;
